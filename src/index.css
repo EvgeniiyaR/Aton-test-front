@@ -34,6 +34,7 @@
 .main {
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 
 .table {
@@ -61,35 +62,41 @@
   box-sizing: border-box;
   border: 1px solid black;
   background-color: transparent;
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background-size: 15px 15px;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: black;
+  transition: background-color .3s;
 }
 
 .table__btn:hover {
   cursor: pointer;
-  background-color: black;
+  background-color:rgba(0, 0, 0, .8);
 }
 
 .table__btn_type_edit {
-  background-image: url(images/pencil.svg);
-  transition: background-image .3s, background-color .3s;
-}
-
-.table__btn_type_edit:hover {
   background-image: url(images/pencil-light.svg);
 }
 
 .table__btn_type_delete {
-  background-image: url(images/delete.svg);
-  transition: background-image .3s, background-color .3s;
+  background-image: url(images/delete-light.svg);
 }
 
-.table__btn_type_delete:hover {
-  background-image: url(images/delete-light.svg);
+.table__button {
+  width: 100%;
+  border: 1px solid black;
+  background-color: black;
+  color: white;
+  padding: 20px 0;
+  transition: opacity .3s;
+}
+
+.table__button:hover {
+  cursor: pointer;
+  opacity: .8;
 }
 
 .footer {
@@ -106,4 +113,136 @@
 
 .footer__link:hover {
   opacity: .8;
+}
+
+.popup {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  z-index: 3;
+  opacity: 0;
+  visibility: hidden;
+  cursor: pointer;
+  transition: visibility .2s, opacity .2s linear;
+}
+
+.popup_opened {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup__container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 430px;
+  background-color: white;
+  padding: 34px 36px 37px;
+  gap: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  position: relative;
+  cursor: default;
+}
+
+.popup__exit-button {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  background-image: url(images/delete-light.svg);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  background-size: 32px 32px;
+  transition: opacity .3s;
+  position: absolute;
+  top: -40px;
+  right: -40px;
+}
+
+.popup__exit-button:hover {
+  cursor: pointer;
+  opacity: .6;
+}
+
+.popup__label {
+  margin: 0;
+}
+
+.popup__form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.popup__input-label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.popup__input {
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.popup__button {
+  box-sizing: border-box;
+  padding: 14px 0;
+  border: 1px solid #000;
+  background-color:rgb(0, 0, 0);
+  width: 100%;
+  color: white;
+  margin-top: 13px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.22;
+  border-radius: 2px;
+  transition: background-color .3s;
+}
+
+.popup__button:hover {
+  background-color:rgba(0, 0, 0, .8);
+  cursor: pointer;
+}
+
+
+@media screen and (max-width: 1279px) {
+  .popup {
+    gap: 16px;
+  }
+
+  .popup__container {
+    width: calc(282px + (430 - 282) * (100vw - 320px) / (1279 - 320));
+    padding: 25px 22px;
+  }
+
+  .popup__exit-button {
+    top: -36px;
+    right: 0;
+    width: calc(20px + (32 - 20) * (100vw - 320px) / (1279 - 320));
+    height: calc(20px + (32 - 20) * (100vw - 320px) / (1279 - 320));
+    background-size: calc(20px + (32 - 20) * (100vw - 320px) / (1279 - 320)) calc(20px + (32 - 20) * (100vw - 320px) / (1279 - 320));
+  }
+
+  .popup__button {
+    padding: 14.5px 0;
+    margin-top: 10px;
+    font-size: calc(14px + (18 - 14) * (100vw - 320px) / (1279 - 320));
+  }
 }
