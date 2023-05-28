@@ -15,7 +15,14 @@ class Api {
 	}
 
 	getUsersInfo() {
-		return fetch(`${this._url}/users/`, {
+		return fetch(`${this._url}/users/?page=1&per_page=5`, {
+			method: "GET",
+			headers: this._headers,
+		}).then((res) => this._checkResponse(res));
+	}
+
+	getUsersPageInfo(page, perPage) {
+		return fetch(`${this._url}/users?page=${page}&per_page=${perPage}`, {
 			method: "GET",
 			headers: this._headers,
 		}).then((res) => this._checkResponse(res));
@@ -41,13 +48,6 @@ class Api {
 			headers: this._headers,
 		}).then((res) => this._checkResponse(res));
 	}
-
-	// deleteCard(id) {
-	// 	return fetch(`${this._url}/cards/${id}`, {
-	// 		method: "DELETE",
-	// 		headers: this._headers
-	// 	}).then((res) => this._checkResponse(res));
-	// }
 }
 
 const api = new Api({

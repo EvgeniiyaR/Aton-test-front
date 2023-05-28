@@ -38,16 +38,32 @@
 }
 
 .table {
-  border: 1px solid black;
-  border-spacing: 20px 10px;
+  border-collapse: collapse;
+}
+
+.table__head {
+  position: sticky;
+  top: 0;
+  left: 0;
+  color: white;
+  background-color: black;
 }
 
 .table__heading {
   width: 150px;
 }
 
-.table__row {
+.table__cell {
   text-align: center;
+}
+
+.table__row:nth-child(even) {
+  background-color: rgba(128, 128, 128, .05);
+  transition: background-color .3s;
+}
+
+.table__row:hover {
+  background-color: rgba(128, 128, 128, .3);
 }
 
 .table__photo {
@@ -92,11 +108,65 @@
   color: white;
   padding: 20px 0;
   transition: opacity .3s;
+  font-size: 18px;
 }
 
 .table__button:hover {
   cursor: pointer;
   opacity: .8;
+}
+
+.table__page-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table__page-list {
+  padding: 20px 0;
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.table__button-page {
+  box-sizing: border-box;
+  border: 1px solid black;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  color: black;
+  border-radius: 50%;
+  transition: background-color .3s;
+}
+
+.table__button-page:hover {
+  cursor: pointer;
+  background-color: rgba(128, 128, 128, .3);
+}
+
+.table__button-page:disabled {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
+
+.table__button-page_active {
+  background-color: black;
+  color: white;
+  transition: background-color .3s;
+}
+
+.table__button-page_active:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, .8);
+}
+
+.table__page-label {
+  display: flex;
+  gap: 10px;
 }
 
 .footer {
@@ -223,6 +293,10 @@
 
 
 @media screen and (max-width: 1279px) {
+  .table__button {
+    font-size: calc(14px + (18 - 14) * (100vw - 320px) / (1279 - 320));
+  }
+
   .popup {
     gap: 16px;
   }

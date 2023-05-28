@@ -52,10 +52,13 @@ class AddUserPopup extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.onAddUser();
-    // this.props.users[this.props.indexUser].first_name = this.state.firstName;
-    // this.props.users[this.props.indexUser].last_name = this.state.lastName;
-    // this.props.users[this.props.indexUser].email = this.state.email;
-    // this.props.users[this.props.indexUser].avatar = this.state.avatar;
+    this.props.users.unshift({
+      id: this.props.id,
+      first_name: this.state.firstName,
+      last_name: this.state.lastName,
+      email: this.state.email,
+      avatar: this.state.avatar,
+    });
     this.setState({
       firstName: '',
       lastName: '',

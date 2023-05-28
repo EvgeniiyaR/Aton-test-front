@@ -30,12 +30,12 @@ class User extends Component {
   render() {
     return (
       <>
-        <td><img className="table__photo" src={this.props.user.avatar} alt={`${this.props.user.first_name} ${this.props.user.last_name}`} /></td>
-        <td className="table__row">{this.props.user.first_name}</td>
-        <td className="table__row">{this.props.user.last_name}</td>
-        <td className="table__row">{this.props.user.email}</td>
-        <td><button className="table__btn table__btn_type_edit" onClick={this.handleEditSelectedUserClick} type="button"></button></td>
-        <td><button className="table__btn table__btn_type_delete" onClick={this.handleDeleteSelectedUserClick} type="button"></button></td>
+        <td className="table__cell"><img className="table__photo" src={this.props.user.avatar} alt={`${this.props.user.first_name} ${this.props.user.last_name}`} /></td>
+        <td className="table__cell">{this.props.user.first_name}</td>
+        <td className="table__cell">{this.props.user.last_name}</td>
+        <td className="table__cell">{this.props.user.email}</td>
+        <td className="table__cell"><button className="table__btn table__btn_type_edit" onClick={this.handleEditSelectedUserClick} type="button"></button></td>
+        <td className="table__cell"><button className="table__btn table__btn_type_delete" onClick={this.handleDeleteSelectedUserClick} type="button"></button></td>
       </>
     )
   }
