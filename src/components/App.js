@@ -1,12 +1,17 @@
 import { Component } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import api from '../utils/Api.js';
+import auth from '../utils/Auth.js';
 import Main from './Main';
 import Header from './Header';
 import Footer from './Footer';
 import EditUserPopup from './EditUserPopup';
 import AddUserPopup from './AddUserPopup';
 import InfoTooltip from './InfoTooltip';
+import Register from './Register';
+import Login from './Login';
+import ProtectedRoute from './ProtectedRoute';
+import NotFound from './NotFound';
 
 class App extends Component {
   constructor(props) {
@@ -30,6 +35,8 @@ class App extends Component {
       isLoading: false,
       infoList: [],
       indexInfo: null,
+      isLoggedIn: false,
+      isRegister: false,
     };
   }
 
@@ -46,6 +53,62 @@ class App extends Component {
       });
     })
     .catch((err) => console.log(`Возникла ошибка: ${err}`));
+    this.checkToken();
+  }
+
+  //Регистрация
+
+  handleRegister = (email, password) => {
+    auth.register(email, password)
+    .then(() => {
+      const list = this.state.infoList;
+      list.push('Регистрация прошла успешно!');
+      this.setState({
+        isRegister: true,
+      });
+    })
+    .catch((err) => console.log(`Возникла ошибка: ${err}`));
+  }
+
+  //Аутентификация
+
+  handleLogin = (email, password) => {
+    auth.login(email, password)
+    .then((res) => {
+      localStorage.setItem('token', res.token);
+      this.setState({
+        isLoggedIn: true,
+      })
+      const list = this.state.infoList;
+      list.push('Добро пожаловать!');
+    })
+    .catch((err) => console.log(`Возникла ошибка: ${err}`));
+  }
+
+  //Выход
+
+  handleLogout = () => {
+    auth.logout()
+    .then(() => {
+      localStorage.removeItem('token');
+      this.setState({
+        isLoggedIn: false,
+        isRegister: false,
+      });
+      const list = this.state.infoList;
+      list.push('До встречи!');
+    })
+  }
+
+  //Проверка токена
+
+  checkToken = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.setState({
+        isLoggedIn: true,
+      })
+    }
   }
 
   //Установка стейта попапа редактирование в открытое состояние
@@ -132,7 +195,7 @@ class App extends Component {
     api.editUserInfo(this.state.selectedUser.id)
     .then(() => {
       const list = this.state.infoList;
-      list.push(`Данные пользователя обновлены! ID ${this.state.selectedUser.id}`);
+      list.push('Данные пользователя обновлены!');
       this.setState({
         isEditUserPopupOpen: false,
         infoList: list,
@@ -147,10 +210,10 @@ class App extends Component {
     api.deleteUserInfo(this.state.selectedUser.id)
     .then(() => {
       const list = this.state.infoList;
-      list.push(`Данные пользователя удалены! ID ${this.state.selectedUser.id}`);
+      list.push('Пользователь удален!');
       this.setState({
         selectedUser: {
-          id: '',
+          id: null,
           first_name: '',
           last_name: '',
           email_name: '',
@@ -178,14 +241,22 @@ class App extends Component {
     .catch((err) => console.log(`Возникла ошибка: ${err}`));
   }
 
+  //Переключение флага регистрации
+
+  setIsRegister = () => {
+    this.setState({
+      isRegister: false,
+    })
+  }
+
   render() {
-    console.log(this.state.isEdit);
     return (
       <div className="body">
         <div className="page">
-          <Header />
+          <Header handleLogout={this.handleLogout} isLoggedIn={this.state.isLoggedIn} setIsRegister={this.setIsRegister}/>
           <Routes>
-            <Route path="/" element={
+            <Route path="/main" element={
+              <ProtectedRoute element={
               this.state.isLoadingGlobal ?
                 <Main
                   users={this.state.users}
@@ -204,9 +275,10 @@ class App extends Component {
                 <div>
                   <h2>Загрузка...</h2>
                 </div>
-              } />
-            {/* <Route path="register" element={<Register />}/> */}
-            {/* <Route path="login" element={<Login />}/> */}
+              } isLoggedIn={this.state.isLoggedIn} />} />
+            <Route path="/register" element={this.state.isLoggedIn ? <Navigate to="/main" replace /> : this.state.isRegister ? <Navigate to="/login" replace /> : <Register handleRegister={this.handleRegister} />} />
+            <Route path="/login" element={this.state.isLoggedIn ? <Navigate to="/main" replace /> : <Login handleLogin={this.handleLogin} />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
         </div>

@@ -6,9 +6,11 @@ class User extends Component {
 
   handleEditSelectedUserClick = () => {
     this.props.onSelectedUser({
-      id: String(this.props.id),
+      id: this.props.id,
       ...this.props.user,
     });
+    console.log(this.props.user);
+    console.log(this.props.id);
     this.props.onEditUser();
     const index = this.props.users.findIndex((item) => item.id === this.props.id);
     this.props.setIndexUser(index);
@@ -18,7 +20,7 @@ class User extends Component {
 
   handleDeleteSelectedUserClick = () => {
     this.props.onSelectedUser({
-      id: String(this.props.id),
+      id: this.props.id,
       ...this.props.user,
     });
     console.log(this.props.user);

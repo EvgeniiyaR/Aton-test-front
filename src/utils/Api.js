@@ -16,35 +16,35 @@ class Api {
 
 	getUsersInfo() {
 		return fetch(`${this._url}/users/?page=1&per_page=5`, {
-			method: "GET",
+			method: 'GET',
 			headers: this._headers,
 		}).then((res) => this._checkResponse(res));
 	}
 
 	getUsersPageInfo(page, perPage) {
 		return fetch(`${this._url}/users?page=${page}&per_page=${perPage}`, {
-			method: "GET",
+			method: 'GET',
 			headers: this._headers,
 		}).then((res) => this._checkResponse(res));
 	}
 
 	editUserInfo(id) {
 		return fetch(`${this._url}/users/${id}`, {
-			method: "PATCH",
+			method: 'PATCH',
 			headers: this._headers,
 		}).then((res) => this._checkResponse(res));
 	}
 
   deleteUserInfo(id) {
 		return fetch(`${this._url}/users/${id}`, {
-			method: "DELETE",
+			method: 'DELETE',
 			headers: this._headers,
 		}).then((res) => this._checkResponse(res));
 	}
 
 	addNewUser() {
 		return fetch(`${this._url}/users`, {
-			method: "POST",
+			method: 'POST',
 			headers: this._headers,
 		}).then((res) => this._checkResponse(res));
 	}
