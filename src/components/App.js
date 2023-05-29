@@ -6,6 +6,7 @@ import Header from './Header';
 import Footer from './Footer';
 import EditUserPopup from './EditUserPopup';
 import AddUserPopup from './AddUserPopup';
+import InfoTooltip from './InfoTooltip';
 
 class App extends Component {
   constructor(props) {
@@ -25,6 +26,10 @@ class App extends Component {
       },
       indexUser: null,
       newId: null,
+      isLoadingGlobal: false,
+      isLoading: false,
+      infoList: [],
+      indexInfo: null,
     };
   }
 
@@ -36,6 +41,8 @@ class App extends Component {
       this.setState({
         users: res.data,
         pages: res.total_pages,
+        isLoadingGlobal: true,
+        isLoading: true,
       });
     })
     .catch((err) => console.log(`Возникла ошибка: ${err}`));
@@ -69,13 +76,31 @@ class App extends Component {
     this.setState({ indexUser });
   }
 
+  //Установка стейта загрузки
+
+  setIsLoading = (isLoading) => {
+    this.setState({ isLoading });
+  }
+
+  //Установка стейта списка оповещений
+
+  setInfoList = (infoList) => {
+    this.setState({ infoList });
+  }
+
   //Закрытие всех попапов
 
   closeAllPopups = () => {
     this.setState({
       isEditUserPopupOpen: false,
       isAddUserPopupOpen: false,
-      selectedUser: {},
+      selectedUser: {
+        id: '',
+        first_name: '',
+        last_name: '',
+        email_name: '',
+        avatar_name: '',
+      },
     });
   }
 
@@ -95,6 +120,7 @@ class App extends Component {
       this.setState({
         users: res.data,
         pages: res.total_pages,
+        isLoading: true,
       })
     })
     .catch((err) => console.log(`Возникла ошибка: ${err}`));
@@ -105,8 +131,11 @@ class App extends Component {
   handleEditUser = () => {
     api.editUserInfo(this.state.selectedUser.id)
     .then(() => {
+      const list = this.state.infoList;
+      list.push(`Данные пользователя обновлены! ID ${this.state.selectedUser.id}`);
       this.setState({
         isEditUserPopupOpen: false,
+        infoList: list,
       });
     })
     .catch((err) => console.log(`Возникла ошибка: ${err}`));
@@ -117,8 +146,17 @@ class App extends Component {
   handleDeleteUser = () => {
     api.deleteUserInfo(this.state.selectedUser.id)
     .then(() => {
+      const list = this.state.infoList;
+      list.push(`Данные пользователя удалены! ID ${this.state.selectedUser.id}`);
       this.setState({
-        selectedUser: {},
+        selectedUser: {
+          id: '',
+          first_name: '',
+          last_name: '',
+          email_name: '',
+          avatar_name: '',
+        },
+        infoList: list,
       });
     })
     .catch((err) => console.log(`Возникла ошибка: ${err}`));
@@ -129,31 +167,44 @@ class App extends Component {
   handleAddUser = () => {
     api.addNewUser()
     .then((res) => {
+      const list = this.state.infoList;
+      list.push(`Пользователь добавлен! ID ${res.id}`);
       this.setState({
         isAddUserPopupOpen: false,
         newId: res.id,
+        infoList: list,
       });
     })
     .catch((err) => console.log(`Возникла ошибка: ${err}`));
   }
 
   render() {
+    console.log(this.state.isEdit);
     return (
       <div className="body">
         <div className="page">
           <Header />
           <Routes>
-            <Route path="/" element={<Main
-              users={this.state.users}
-              pages={this.state.pages}
-              onEditUser={this.handleEditUserClick}
-              onAddUser={this.handleAddUserClick}
-              onSelectedUser={this.setStateSelectedUser}
-              selectedUser={this.state.selectedUser}
-              onDeleteUser={this.handleDeleteUser}
-              changeUsers={this.changeUsers}
-              setIndexUser={this.setIndexUser}
-              onPage={this.handleGetUsers} />} />
+            <Route path="/" element={
+              this.state.isLoadingGlobal ?
+                <Main
+                  users={this.state.users}
+                  pages={this.state.pages}
+                  onEditUser={this.handleEditUserClick}
+                  onAddUser={this.handleAddUserClick}
+                  onSelectedUser={this.setStateSelectedUser}
+                  selectedUser={this.state.selectedUser}
+                  onDeleteUser={this.handleDeleteUser}
+                  changeUsers={this.changeUsers}
+                  setIndexUser={this.setIndexUser}
+                  onPage={this.handleGetUsers}
+                  isLoading={this.state.isLoading}
+                  setIsLoading={this.setIsLoading} />
+                :
+                <div>
+                  <h2>Загрузка...</h2>
+                </div>
+              } />
             {/* <Route path="register" element={<Register />}/> */}
             {/* <Route path="login" element={<Login />}/> */}
           </Routes>
@@ -174,7 +225,7 @@ class App extends Component {
           onClose={this.closeAllPopups}
           users={this.state.users}
           id={this.state.newId} />
-        {/* <InfoTooltip /> */}
+        <InfoTooltip infoList={this.state.infoList} setInfoList={this.setInfoList} />
       </div>
     );
   }

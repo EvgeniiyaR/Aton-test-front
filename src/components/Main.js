@@ -35,52 +35,66 @@ class Main extends Component {
 
   handleSelectedNextPageClick = () => {
     let page = this.state.selectedPage;
-    if (this.state.selectedPage === 1) {
+    if (page === 1) {
       page += 1;
+      if (this.props.pages === 2) {
+        this.setState({
+          isDisabledPrevButton: false,
+          isDisabledNextButton: true,
+          selectedPage: page,
+        })
+      } else {
       this.setState({
         isDisabledPrevButton: false,
         selectedPage: page,
-      })
-    } else if (this.state.selectedPage + 1 === this.props.pages) {
+      })}
+    } else if (page + 1 === this.props.pages) {
       page += 1;
       this.setState({
         isDisabledNextButton: true,
         selectedPage: page,
       })
-    } else if (this.state.selectedPage < this.props.pages) {
+    } else if (page < this.props.pages) {
       page += 1;
       this.setState({
         isDisabledPrevButton: false,
         selectedPage: page,
       })
     }
+    this.props.setIsLoading(false);
     this.props.onPage(page, this.state.perPage);
   }
 
   handleSelectedPrevPageClick = () => {
     let page = this.state.selectedPage;
-    if (this.state.selectedPage === this.props.pages) {
-      console.log("if")
+    if (page === this.props.pages) {
       page -= 1;
-      this.setState({
-        isDisabledNextButton: false,
-        selectedPage: page,
-      })
-    } else if (this.state.selectedPage - 1 === 1) {
-      console.log("else if")
+      if (this.props.pages === 2) {
+        this.setState({
+          isDisabledPrevButton: true,
+          isDisabledNextButton: false,
+          selectedPage: page,
+        })
+      } else {
+        this.setState({
+          isDisabledNextButton: false,
+          selectedPage: page,
+        })
+      }
+    } else if (page - 1 === 1) {
       page -= 1;
       this.setState({
         isDisabledPrevButton: true,
         selectedPage: page,
       })
-    } else if (this.state.selectedPage < this.props.pages) {
-      console.log("else if2")
+    } else if (page < this.props.pages) {
       page -= 1;
       this.setState({
         isDisabledPrevButton: false,
         selectedPage: page,
       })
     }
+    this.props.setIsLoading(false);
     this.props.onPage(page, this.state.perPage);
   }
 
@@ -90,7 +104,10 @@ class Main extends Component {
     this.setState({
       perPage: Number(e.target.value),
       selectedPage: 1,
+      isDisabledPrevButton: true,
+      isDisabledNextButton: false,
     })
+    this.props.setIsLoading(false);
     this.props.onPage(1, Number(e.target.value));
   }
 
@@ -99,6 +116,7 @@ class Main extends Component {
     console.log(this.state.perPage);
     return (
       <main className="main">
+        {this.props.isLoading ?
         <table className="table">
           <thead className="table__head">
             <tr>
@@ -127,6 +145,11 @@ class Main extends Component {
           ))}
           </tbody>
         </table>
+        :
+        <div>
+          <h2>Загрузка...</h2>
+        </div>
+        }
         <button className="table__button" onClick={this.props.onAddUser} type="button">Добавить пользователя</button>
         <div className="table__page-container">
           <ul className="table__page-list">
@@ -141,7 +164,8 @@ class Main extends Component {
                 pages={this.props.pages}
                 setDisabledNextButton={this.setDisabledNextButton}
                 setDisabledPrevButton={this.setDisabledPrevButton}
-                perPage={this.state.perPage} />
+                perPage={this.state.perPage}
+                setIsLoading={this.props.setIsLoading} />
             </li>
           ))}
             <li><button className="table__button-page" onClick={this.handleSelectedNextPageClick} disabled={this.state.isDisabledNextButton}>❯</button></li>

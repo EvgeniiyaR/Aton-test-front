@@ -12,38 +12,25 @@ class AddUserPopup extends Component {
     }
   }
 
-  //Обновление данных в значениях импутов в зависимости от изменения пропсов и текущих стейтов
-
-  // componentDidUpdate(prevState, prevProps) {
-  //   if (prevProps === this.state && this.props.isOpen) {
-  //     this.setState({
-  //       firstName: this.props.selectedUser.first_name,
-  //       lastName: this.props.selectedUser.last_name,
-  //       email: this.props.selectedUser.email,
-  //       avatar: this.props.selectedUser.avatar,
-  //     });
-  //   }
-  // }
-
   //Запись изменений в значениях импутов
 
   handleChange = (e) => {
     if (e.target.name === 'name') {
       this.setState({
         firstName: e.target.value,
-      })
+      });
     } else if (e.target.name === 'surname') {
       this.setState({
         lastName: e.target.value,
-      })
+      });
     } else if (e.target.name === 'email') {
       this.setState({
         email: e.target.value,
-      })
+      });
     } else if (e.target.name === 'avatar') {
       this.setState({
         avatar: e.target.value,
-      })
+      });
     }
   }
 
@@ -64,7 +51,7 @@ class AddUserPopup extends Component {
       lastName: '',
       email: '',
       avatar: '',
-    })
+    });
   }
 
   render() {

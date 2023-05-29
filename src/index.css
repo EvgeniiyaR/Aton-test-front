@@ -291,6 +291,27 @@
   cursor: pointer;
 }
 
+.info__button {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 150px;
+  height: 100px;
+  background-color: black;
+  transition: visibility .2s, opacity .2s linear;
+  display: flex;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.info__button_opened {
+  cursor: pointer;
+  opacity: 1;
+  visibility: visible;
+}
 
 @media screen and (max-width: 1279px) {
   .table__button {

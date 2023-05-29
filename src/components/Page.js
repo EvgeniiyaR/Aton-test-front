@@ -10,6 +10,7 @@ class Page extends Component {
 
   handleSelectedPageClick = (e) => {
     this.props.setSelectedPage(Number(e.target.value));
+    this.props.setIsLoading(false);
     this.props.onPage(e.target.value, this.props.perPage);
     if (Number(e.target.value) === 1) {
       this.props.setDisabledPrevButton(true);
