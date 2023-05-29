@@ -11,8 +11,8 @@ class Header extends Component {
               {
               this.props.isLoggedIn ?
               <>
-                <Route path="/main" element={<li><Link className="header__link" to="/login" onClick={this.props.handleLogout}>Выйти</Link></li>} />
-                <Route path="*" element={<li><Link className="header__link" to="/main">Главная</Link></li>} />
+                <Route path="/" element={<li><Link className="header__link" to="/login" onClick={this.props.handleLogout}>Выйти</Link></li>} />
+                <Route path="*" element={<li><Link className="header__link" to="/">Главная</Link></li>} />
               </>
               :
               <>

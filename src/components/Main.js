@@ -140,7 +140,10 @@ class Main extends Component {
                 onDeleteUser={this.props.onDeleteUser}
                 users={this.props.users}
                 changeUsers={this.props.changeUsers}
-                setIndexUser={this.props.setIndexUser} />
+                setIndexUser={this.props.setIndexUser}
+                infoList={this.props.infoList}
+                setInfoList={this.props.setInfoList}
+                setIsError={this.props.setIsError} />
             </tr>
           ))}
           </tbody>

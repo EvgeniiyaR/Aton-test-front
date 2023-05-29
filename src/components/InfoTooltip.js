@@ -12,7 +12,7 @@ class InfoTooltip extends Component {
   render() {
     return (
       this.props.infoList.map((item, index) => (
-        <button key={index} className={`info__button ${item && "info__button_opened"}`} onClick={this.handleClick} value={index}>{item}</button>
+        <button key={index} className={`info__button ${this.props.isError && "info__button_type_error"} ${item && "info__button_opened"}`} onClick={this.handleClick} value={index}>{item}</button>
       ))
     )
   }

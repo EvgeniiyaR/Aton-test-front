@@ -37,6 +37,7 @@ class App extends Component {
       indexInfo: null,
       isLoggedIn: false,
       isRegister: false,
+      isError: false,
     };
   }
 
@@ -59,44 +60,66 @@ class App extends Component {
   //Регистрация
 
   handleRegister = (email, password) => {
+    const list = this.state.infoList;
     auth.register(email, password)
     .then(() => {
-      const list = this.state.infoList;
       list.push('Регистрация прошла успешно!');
       this.setState({
         isRegister: true,
+        isError: false,
       });
     })
-    .catch((err) => console.log(`Возникла ошибка: ${err}`));
+    .catch((err) => {
+      this.setState({
+        isError: true,
+      });
+      list.push('Возникла ошибка!');
+      console.log(`Возникла ошибка: ${err}`);
+    });
   }
 
   //Аутентификация
 
   handleLogin = (email, password) => {
+    const list = this.state.infoList;
     auth.login(email, password)
     .then((res) => {
       localStorage.setItem('token', res.token);
       this.setState({
         isLoggedIn: true,
+        isError: false,
       })
-      const list = this.state.infoList;
       list.push('Добро пожаловать!');
     })
-    .catch((err) => console.log(`Возникла ошибка: ${err}`));
+    .catch((err) => {
+      this.setState({
+        isError: true,
+      });
+      list.push('Возникла ошибка!');
+      console.log(`Возникла ошибка: ${err}`);
+    });
   }
 
   //Выход
 
   handleLogout = () => {
+    const list = this.state.infoList;
     auth.logout()
     .then(() => {
       localStorage.removeItem('token');
       this.setState({
         isLoggedIn: false,
         isRegister: false,
+        isError: false,
       });
-      const list = this.state.infoList;
       list.push('До встречи!');
+    })
+    .catch((err) => {
+      this.setState({
+        isError: true,
+      });
+      list.push('Возникла ошибка!');
+      console.log(`Возникла ошибка: ${err}`);
     })
   }
 
@@ -151,6 +174,20 @@ class App extends Component {
     this.setState({ infoList });
   }
 
+  //Установка стейта оповещения об ошибке
+
+  setIsError = (isError) => {
+    this.setState({ isError });
+  }
+
+  //Функция для переключения флага регистрации в значение false
+
+  setIsRegister = () => {
+    this.setState({
+      isRegister: false,
+    });
+  }
+
   //Закрытие всех попапов
 
   closeAllPopups = () => {
@@ -192,24 +229,31 @@ class App extends Component {
   //Запрос по API редактирования пользователя
 
   handleEditUser = () => {
+    const list = this.state.infoList;
     api.editUserInfo(this.state.selectedUser.id)
     .then(() => {
-      const list = this.state.infoList;
       list.push('Данные пользователя обновлены!');
       this.setState({
         isEditUserPopupOpen: false,
         infoList: list,
+        isError: false,
       });
     })
-    .catch((err) => console.log(`Возникла ошибка: ${err}`));
+    .catch((err) => {
+      this.setState({
+        isError: true,
+      });
+      list.push('Возникла ошибка!');
+      console.log(`Возникла ошибка: ${err}`);
+    });
   }
 
   //Запрос по API удаления пользователя
 
   handleDeleteUser = () => {
+    const list = this.state.infoList;
     api.deleteUserInfo(this.state.selectedUser.id)
     .then(() => {
-      const list = this.state.infoList;
       list.push('Пользователь удален!');
       this.setState({
         selectedUser: {
@@ -220,42 +264,51 @@ class App extends Component {
           avatar_name: '',
         },
         infoList: list,
+        isError: false,
       });
     })
-    .catch((err) => console.log(`Возникла ошибка: ${err}`));
+    .catch((err) => {
+      this.setState({
+        isError: true,
+      });
+      list.push('Возникла ошибка!');
+      console.log(`Возникла ошибка: ${err}`);
+    });
   }
 
   //Запрос по API добавления пользователя
 
   handleAddUser = () => {
+    const list = this.state.infoList;
     api.addNewUser()
     .then((res) => {
-      const list = this.state.infoList;
       list.push(`Пользователь добавлен! ID ${res.id}`);
       this.setState({
         isAddUserPopupOpen: false,
         newId: res.id,
         infoList: list,
+        isError: false,
       });
     })
-    .catch((err) => console.log(`Возникла ошибка: ${err}`));
-  }
-
-  //Переключение флага регистрации
-
-  setIsRegister = () => {
-    this.setState({
-      isRegister: false,
-    })
+    .catch((err) => {
+      this.setState({
+        isError: true,
+      });
+      list.push('Возникла ошибка!');
+      console.log(`Возникла ошибка: ${err}`);
+    });
   }
 
   render() {
     return (
       <div className="body">
         <div className="page">
-          <Header handleLogout={this.handleLogout} isLoggedIn={this.state.isLoggedIn} setIsRegister={this.setIsRegister}/>
+          <Header
+            handleLogout={this.handleLogout}
+            isLoggedIn={this.state.isLoggedIn}
+            setIsRegister={this.setIsRegister} />
           <Routes>
-            <Route path="/main" element={
+            <Route path="/" element={
               <ProtectedRoute element={
               this.state.isLoadingGlobal ?
                 <Main
@@ -270,14 +323,17 @@ class App extends Component {
                   setIndexUser={this.setIndexUser}
                   onPage={this.handleGetUsers}
                   isLoading={this.state.isLoading}
-                  setIsLoading={this.setIsLoading} />
+                  setIsLoading={this.setIsLoading}
+                  infoList={this.state.infoList}
+                  setInfoList={this.setInfoList}
+                  setIsError={this.setIsError} />
                 :
                 <div>
                   <h2>Загрузка...</h2>
                 </div>
               } isLoggedIn={this.state.isLoggedIn} />} />
-            <Route path="/register" element={this.state.isLoggedIn ? <Navigate to="/main" replace /> : this.state.isRegister ? <Navigate to="/login" replace /> : <Register handleRegister={this.handleRegister} />} />
-            <Route path="/login" element={this.state.isLoggedIn ? <Navigate to="/main" replace /> : <Login handleLogin={this.handleLogin} />} />
+            <Route path="/register" element={this.state.isLoggedIn ? <Navigate to="/" replace /> : this.state.isRegister ? <Navigate to="/login" replace /> : <Register handleRegister={this.handleRegister} />} />
+            <Route path="/login" element={this.state.isLoggedIn ? <Navigate to="/" replace /> : <Login handleLogin={this.handleLogin} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
@@ -297,7 +353,10 @@ class App extends Component {
           onClose={this.closeAllPopups}
           users={this.state.users}
           id={this.state.newId} />
-        <InfoTooltip infoList={this.state.infoList} setInfoList={this.setInfoList} />
+        <InfoTooltip
+          infoList={this.state.infoList}
+          setInfoList={this.setInfoList}
+          isError={this.state.isError} />
       </div>
     );
   }
