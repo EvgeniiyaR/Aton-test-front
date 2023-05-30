@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/Aton-test-front/static/css/main.250ca25d.css",
-    "main.js": "/Aton-test-front/static/js/main.f484bad1.js",
+    "main.js": "/Aton-test-front/static/js/main.e24b5d7f.js",
     "static/js/787.83963e7c.chunk.js": "/Aton-test-front/static/js/787.83963e7c.chunk.js",
     "index.html": "/Aton-test-front/index.html",
     "static/media/pencil-light.svg": "/Aton-test-front/static/media/pencil-light.8667ac4a523e8fc42e59.svg",
     "static/media/delete-light.svg": "/Aton-test-front/static/media/delete-light.2ceb783afbab75916ddc.svg",
     "main.250ca25d.css.map": "/Aton-test-front/static/css/main.250ca25d.css.map",
-    "main.f484bad1.js.map": "/Aton-test-front/static/js/main.f484bad1.js.map",
+    "main.e24b5d7f.js.map": "/Aton-test-front/static/js/main.e24b5d7f.js.map",
     "787.83963e7c.chunk.js.map": "/Aton-test-front/static/js/787.83963e7c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.250ca25d.css",
-    "static/js/main.f484bad1.js"
+    "static/js/main.e24b5d7f.js"
   ]
 }
