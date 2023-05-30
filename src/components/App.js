@@ -12,6 +12,7 @@ import Register from './Register';
 import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
 import NotFound from './NotFound';
+import Loader from './Loader';
 
 class App extends Component {
   constructor(props) {
@@ -44,6 +45,12 @@ class App extends Component {
   //Монтирование пользователей в таблицу посредством обращения к API
 
   componentDidMount() {
+    this.handleGetUsersInfo();
+  }
+
+  //Получение данных при первом обовлении страницы
+
+  handleGetUsersInfo = () => {
     api.getUsersInfo()
     .then((res) => {
       this.setState({
@@ -57,7 +64,7 @@ class App extends Component {
     this.checkToken();
   }
 
-  //Регистрация
+  //Регистрация по API
 
   handleRegister = (email, password) => {
     const list = this.state.infoList;
@@ -78,17 +85,18 @@ class App extends Component {
     });
   }
 
-  //Аутентификация
+  //Аутентификация по API
 
   handleLogin = (email, password) => {
     const list = this.state.infoList;
     auth.login(email, password)
     .then((res) => {
       localStorage.setItem('token', res.token);
+      this.handleGetUsersInfo();
       this.setState({
         isLoggedIn: true,
         isError: false,
-      })
+      });
       list.push('Добро пожаловать!');
     })
     .catch((err) => {
@@ -100,7 +108,7 @@ class App extends Component {
     });
   }
 
-  //Выход
+  //Выход по API
 
   handleLogout = () => {
     const list = this.state.infoList;
@@ -130,7 +138,7 @@ class App extends Component {
     if (token) {
       this.setState({
         isLoggedIn: true,
-      })
+      });
     }
   }
 
@@ -328,9 +336,7 @@ class App extends Component {
                   setInfoList={this.setInfoList}
                   setIsError={this.setIsError} />
                 :
-                <div>
-                  <h2>Загрузка...</h2>
-                </div>
+                <Loader />
               } isLoggedIn={this.state.isLoggedIn} />} />
             <Route path="/register" element={this.state.isLoggedIn ? <Navigate to="/" replace /> : this.state.isRegister ? <Navigate to="/login" replace /> : <Register handleRegister={this.handleRegister} />} />
             <Route path="/login" element={this.state.isLoggedIn ? <Navigate to="/" replace /> : <Login handleLogin={this.handleLogin} />} />

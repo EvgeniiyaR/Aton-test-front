@@ -2,6 +2,8 @@ import { Component } from 'react';
 
 class InfoTooltip extends Component {
 
+  //Исчезновение оповещения по клику
+
   handleClick = (e) => {
     const index = Number(e.target.value);
     const updatedList = this.props.infoList;

@@ -9,7 +9,7 @@ class AddUserPopup extends Component {
       lastName: '',
       email: '',
       avatar: '',
-    }
+    };
   }
 
   //Запись изменений в значениях импутов

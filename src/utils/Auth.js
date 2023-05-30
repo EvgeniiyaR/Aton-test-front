@@ -16,7 +16,8 @@ class Auth {
 			method: 'POST',
 			headers: this._headers,
       body: JSON.stringify({ email, password}),
-		}).then((res) => this._checkResponse(res));
+		})
+    .then((res) => this._checkResponse(res));
 	}
 
 	login(email, password) {
@@ -24,14 +25,16 @@ class Auth {
 			method: 'POST',
 			headers: this._headers,
       body: JSON.stringify({ email, password}),
-		}).then((res) => this._checkResponse(res));
+		})
+    .then((res) => this._checkResponse(res));
 	}
 
   logout() {
 		return fetch(`${this._url}/logout`, {
 			method: 'POST',
 			headers: this._headers,
-		}).then((res) => this._checkResponse(res));
+		})
+    .then((res) => this._checkResponse(res));
 	}
 }
 

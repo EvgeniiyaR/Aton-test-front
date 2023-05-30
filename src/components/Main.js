@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import User from './User';
 import Page from './Page';
+import Loader from './Loader';
 
 class Main extends Component {
   constructor(props) {
@@ -10,14 +11,18 @@ class Main extends Component {
       isDisabledNextButton: false,
       isDisabledPrevButton: true,
       perPage: 5,
-    }
+    };
   }
+
+  //Установка выбранной страницы
 
   setSelectedPage = (page) => {
     this.setState({
       selectedPage: page,
     });
   }
+
+  //Установка кнопок в состояние disabled true/false
 
   setDisabledNextButton = (isDisabled) => {
     this.setState({
@@ -42,24 +47,25 @@ class Main extends Component {
           isDisabledPrevButton: false,
           isDisabledNextButton: true,
           selectedPage: page,
-        })
+        });
       } else {
-      this.setState({
-        isDisabledPrevButton: false,
-        selectedPage: page,
-      })}
+        this.setState({
+          isDisabledPrevButton: false,
+          selectedPage: page,
+        });
+      }
     } else if (page + 1 === this.props.pages) {
       page += 1;
       this.setState({
         isDisabledNextButton: true,
         selectedPage: page,
-      })
+      });
     } else if (page < this.props.pages) {
       page += 1;
       this.setState({
         isDisabledPrevButton: false,
         selectedPage: page,
-      })
+      });
     }
     this.props.setIsLoading(false);
     this.props.onPage(page, this.state.perPage);
@@ -74,25 +80,25 @@ class Main extends Component {
           isDisabledPrevButton: true,
           isDisabledNextButton: false,
           selectedPage: page,
-        })
+        });
       } else {
         this.setState({
           isDisabledNextButton: false,
           selectedPage: page,
-        })
+        });
       }
     } else if (page - 1 === 1) {
       page -= 1;
       this.setState({
         isDisabledPrevButton: true,
         selectedPage: page,
-      })
+      });
     } else if (page < this.props.pages) {
       page -= 1;
       this.setState({
         isDisabledPrevButton: false,
         selectedPage: page,
-      })
+      });
     }
     this.props.setIsLoading(false);
     this.props.onPage(page, this.state.perPage);
@@ -106,14 +112,12 @@ class Main extends Component {
       selectedPage: 1,
       isDisabledPrevButton: true,
       isDisabledNextButton: false,
-    })
+    });
     this.props.setIsLoading(false);
     this.props.onPage(1, Number(e.target.value));
   }
 
   render() {
-    console.log('selmain', this.state.selectedPage);
-    console.log(this.state.perPage);
     return (
       <main className="main">
         {this.props.isLoading ?
@@ -149,9 +153,7 @@ class Main extends Component {
           </tbody>
         </table>
         :
-        <div>
-          <h2>Загрузка...</h2>
-        </div>
+        <Loader />
         }
         <button className="table__button" onClick={this.props.onAddUser} type="button">Добавить пользователя</button>
         <div className="table__page-container">

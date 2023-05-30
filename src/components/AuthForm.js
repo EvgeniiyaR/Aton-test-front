@@ -6,16 +6,20 @@ class AuthForm extends Component {
     this.state = {
       email: '',
       password: '',
-    }
+    };
   }
+
+  //Обновление стейтов при пользовательском вводе
 
   handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({
       ...this.state,
       [name]: value,
-    })
+    });
   }
+
+  //Запрос к API для регистрации/авторизации
 
   handleSubmit = (e) => {
     const { email, password } = this.state;

@@ -5,7 +5,7 @@ class Page extends Component {
     super(props);
     this.state = {
       isSelectedPage: false,
-    }
+    };
   }
 
   handleSelectedPageClick = (e) => {

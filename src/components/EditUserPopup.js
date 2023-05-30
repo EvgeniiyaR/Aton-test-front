@@ -9,7 +9,7 @@ class EditUserPopup extends Component {
       lastName: '',
       email: '',
       avatar: '',
-    }
+    };
   }
 
   //Обновление данных в значениях импутов в зависимости от изменения пропсов и текущих стейтов
@@ -31,19 +31,19 @@ class EditUserPopup extends Component {
     if (e.target.name === 'name') {
       this.setState({
         firstName: e.target.value,
-      })
+      });
     } else if (e.target.name === 'surname') {
       this.setState({
         lastName: e.target.value,
-      })
+      });
     } else if (e.target.name === 'email') {
       this.setState({
         email: e.target.value,
-      })
+      });
     } else if (e.target.name === 'avatar') {
       this.setState({
         avatar: e.target.value,
-      })
+      });
     }
   }
 
@@ -61,7 +61,7 @@ class EditUserPopup extends Component {
       lastName: '',
       email: '',
       avatar: '',
-    })
+    });
   }
 
   render() {
