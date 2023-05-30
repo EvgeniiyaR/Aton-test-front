@@ -12,7 +12,7 @@ class EditUserPopup extends Component {
     };
   }
 
-  //Обновление данных в значениях импутов в зависимости от изменения пропсов и текущих стейтов
+  //Обновление данных в значениях инпутов в зависимости от изменения пропсов и текущих стейтов
 
   componentDidUpdate(prevState, prevProps) {
     if (prevProps === this.state && this.props.isOpen) {
@@ -25,7 +25,7 @@ class EditUserPopup extends Component {
     }
   }
 
-  //Запись изменений в значениях импутов
+  //Запись изменений в значениях инпутов
 
   handleChange = (e) => {
     if (e.target.name === 'name') {

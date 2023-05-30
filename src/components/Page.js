@@ -1,13 +1,6 @@
 import { Component } from 'react';
 
 class Page extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isSelectedPage: false,
-    };
-  }
-
   handleSelectedPageClick = (e) => {
     this.props.setSelectedPage(Number(e.target.value));
     this.props.setIsLoading(false);

@@ -5,9 +5,6 @@ class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSelectedPage: false,
-      clientX: 0,
-      clientY: 0,
       isEmailClick: false,
     };
   }
@@ -37,14 +34,12 @@ class User extends Component {
     this.props.changeUsers(this.props.users);
   }
 
-  //Нажатие на кнопку email, которая поялвяется при max-width: 480px, копирует email и уведомляет пользователя
+  //Нажатие на кнопку email, которая появляется при max-width: 480px, копирует email и уведомляет пользователя
 
   handleEmailButtonClick = (e) => {
     const list = this.props.infoList;
     const copyEmail = e.target.value;
     this.setState({
-      clientX: e.clientX,
-      clientY: e.clientY,
       isEmailClick: !this.state.isEmailClick,
     });
     copy(copyEmail);

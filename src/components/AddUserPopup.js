@@ -12,7 +12,7 @@ class AddUserPopup extends Component {
     };
   }
 
-  //Запись изменений в значениях импутов
+  //Запись изменений в значениях инпутов
 
   handleChange = (e) => {
     if (e.target.name === 'name') {
