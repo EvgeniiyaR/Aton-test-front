@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .body {
   max-width: 1280px;
   margin: 0 auto;
+  font-family: 'Roboto', sans-serif, Georgia, 'Times New Roman', Times, serif;
 }
 
 .page {
@@ -421,6 +424,10 @@
 
 .ant-notification-notice-close {
   color: white;
+}
+
+.ant-modal-content {
+  background-color: black;
 }
 
 @keyframes lds-ring {

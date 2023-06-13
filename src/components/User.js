@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import { copy } from 'clipboard';
+import { Modal } from 'antd';
+
 
 class User extends Component {
   constructor(props) {
@@ -34,6 +36,24 @@ class User extends Component {
     this.props.changeUsers(this.props.users);
   }
 
+  //Всплывающее окно для подтверждения удаления
+
+  handleDeleteConfirm = () => {
+    Modal.confirm({
+      title: 'Вы уверены, что хотите удалить пользователя?',
+      onOk: () => this.handleDeleteSelectedUserClick(),
+      cancelText: 'Нет',
+      okText: 'Да',
+      cancelButtonProps: {
+        type: 'text',
+        style: { borderColor: "black" },
+      },
+      okButtonProps: {
+        danger: true,
+      },
+    });
+  }
+
   //Нажатие на кнопку email, которая появляется при max-width: 480px, копирует email и уведомляет пользователя
 
   handleEmailButtonClick = (e) => {
@@ -57,7 +77,7 @@ class User extends Component {
         <td className="table__cell table__cell_type_email">{this.props.user.email}</td>
         <td className="table__cell table__cell_type_btn-email"><button className="table__btn" type="button" onClick={this.handleEmailButtonClick} value={this.props.user.email}>@</button></td>
         <td className="table__cell table__cell_type_edit"><button className="table__btn table__btn_type_edit" onClick={this.handleEditSelectedUserClick} type="button"></button></td>
-        <td className="table__cell table__cell_type_delete"><button className="table__btn table__btn_type_delete" onClick={this.handleDeleteSelectedUserClick} type="button"></button></td>
+        <td className="table__cell table__cell_type_delete"><button className="table__btn table__btn_type_delete" onClick={this.handleDeleteConfirm} type="button"></button></td>
       </>
     )
   }

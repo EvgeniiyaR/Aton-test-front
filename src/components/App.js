@@ -59,10 +59,6 @@ class App extends Component {
     };
   }
 
-  // handleClickNotification = () {
-
-  // }
-
   //Монтирование пользователей в таблицу посредством обращения к API
 
   componentDidMount() {
