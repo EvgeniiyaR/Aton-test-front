@@ -419,6 +419,10 @@
   animation-delay: -0.15s;
 }
 
+.ant-notification-notice-close {
+  color: white;
+}
+
 @keyframes lds-ring {
   0% {
     transform: rotate(0deg);
