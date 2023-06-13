@@ -1,7 +1,25 @@
 import { Component } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
+import { Modal } from 'antd';
+
 
 class Header extends Component {
+  handleLogoutConfirm = () => {
+    Modal.confirm({
+      title: 'Вы уверены, что хотите выйти из аккаунта?',
+      onOk: () => this.props.handleLogout(),
+      cancelText: 'Нет',
+      okText: 'Да',
+      cancelButtonProps: {
+        type: 'text',
+        style: { borderColor: "black" },
+      },
+      okButtonProps: {
+        danger: true,
+      },
+    });
+  }
+
   render() {
     return (
       <header className="header">
@@ -11,7 +29,7 @@ class Header extends Component {
               {
               this.props.isLoggedIn ?
               <>
-                <Route path="/" element={<li><Link className="header__link" to="/login" onClick={this.props.handleLogout}>Выйти</Link></li>} />
+                <Route path="/" element={<li><Link className="header__link" to="/login" onClick={this.handleLogoutConfirm}>Выйти</Link></li>} />
                 <Route path="*" element={<li><Link className="header__link" to="/">Главная</Link></li>} />
               </>
               :
