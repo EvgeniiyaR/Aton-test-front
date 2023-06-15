@@ -345,7 +345,7 @@
 .form__form {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 40px;
   width: 358px;
 }
 
@@ -363,6 +363,16 @@
 
 .form__input::placeholder {
   color: rgba(128, 128, 128, .8);;
+}
+
+.form__input_error {
+  border-color: red;
+}
+
+.form__input-error {
+  margin: 0;
+  color: red;
+  font-size: 12px;
 }
 
 .form__button {
@@ -468,7 +478,7 @@
   }
 
   .form__form {
-    width: calc(260px + (358 - 260) * (100vw - 320px) / (768 - 320));
+    width: calc(260px + (358 - 260) * (100vw - 320px) / (1279 - 320));
   }
 }
 

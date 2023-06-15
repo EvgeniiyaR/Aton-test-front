@@ -1,29 +1,23 @@
 import { Component } from 'react';
+import Input from './Input';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
 class AuthForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: '',
-      password: '',
-    };
+
+    this.signupSchema = Yup.object().shape({
+      email: Yup.string()
+      .email('Введите email')
+      .required('Введите email. Это обязательное поле для заполнения'),
+      password: Yup.string()
+      .required('Введите пароль. Это обязательное поле для заполнения'),
+    })
   }
 
-  //Обновление стейтов при пользовательском вводе
-
-  handleChange = (e) => {
-    const { name, value } = e.target;
-    this.setState({
-      ...this.state,
-      [name]: value,
-    });
-  }
-
-  //Запрос к API для регистрации/авторизации
-
-  handleSubmit = (e) => {
-    const { email, password } = this.state;
-    e.preventDefault();
+  handleSubmit = (values) => {
+    const { email, password } = values;
     this.props.handleSubmit(email, password);
   }
 
@@ -31,11 +25,22 @@ class AuthForm extends Component {
     return (
       <>
         <h1 className="form__heading">{this.props.heading}</h1>
-        <form className="form__form" onSubmit={this.handleSubmit} name={this.props.name}>
-          <input className="form__input" type="email" value={this.state.email || ''} onChange={this.handleChange} name="email" placeholder="Email"></input>
-          <input className="form__input" type="password" value={this.state.password || ''} onChange={this.handleChange} name="password" placeholder="Пароль"></input>
-          <button className="form__button" type="submit">{this.props.buttonText}</button>
-        </form>
+        <Formik initialValues={{
+          email: '',
+          password: '',
+        }}
+        validationSchema={this.signupSchema}
+        onSubmit={this.handleSubmit}>
+          {
+            ({ values, errors, touched, handleChange, isSubmitting }) => (
+              <Form className="form__form" name={this.props.name} noValidate>
+                <Input values={values.email} errors={errors.email} touched={touched.email} handleChange={handleChange} isSubmitting={isSubmitting} name="email" placeholder="E-mail" type="email" />
+                <Input values={values.password} errors={errors.password} touched={touched.password} handleChange={handleChange} isSubmitting={isSubmitting} name="password" placeholder="Пароль" type="password" />
+                <button className="form__button" type="submit" disabled={isSubmitting}>{this.props.buttonText}</button>
+              </Form>
+            )
+          }
+        </Formik>
         {this.props.children}
       </>
     )

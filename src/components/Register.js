@@ -5,7 +5,7 @@ class Register extends Component {
   render() {
     return (
       <section className="form">
-        <AuthForm heading="Регистрация" buttonText="Зарегистрироваться" name="register" handleSubmit={this.props.handleRegister} />
+        <AuthForm heading="Регистрация" buttonText="Зарегистрироваться" name="register" handleSubmit={this.props.handleRegister}></AuthForm>
       </section>
     )
   }
