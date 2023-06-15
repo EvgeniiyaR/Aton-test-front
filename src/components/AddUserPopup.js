@@ -57,7 +57,10 @@ class AddUserPopup extends Component {
         avatar: '',
       }}
       validationSchema={this.addSchema}
-      onSubmit={this.handleSubmit}>
+      onSubmit={(values, { resetForm }) => {
+        this.handleSubmit(values);
+        resetForm();
+      }}>
       {
         ({ values, errors, touched, handleChange }) => (
           <Form className="popup__form" name="add" noValidate>
