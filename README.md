@@ -18,7 +18,8 @@
 * система оповещений об ответах сервера;
 * реализована серверная пагинация для таблицы;
 * закрыта возможность любого действия, если пользователь не авторизован;
-* хранение token в localStorage.
+* хранение token в localStorage;
+* валидация форм.
 
 При создании применены технологии:
 * HTML;
@@ -28,6 +29,9 @@
 * Методология БЭМ;
 * Webpack;
 * ESLint: eslint-config-react-app.
+* UI Ant Design
+* yup valitation
+* formik
 
 Инструкция по развертыванию:
 1. Склонируйте репозиторий локально: git clone https://github.com/EvgeniiyaR/Aton-test-front.git
