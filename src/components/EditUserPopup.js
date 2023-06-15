@@ -63,7 +63,7 @@ class EditUserPopup extends Component {
                   <Input values={values.surname} errors={errors.surname} touched={touched.surname} handleChange={handleChange} name="surname" placeholder="Фамилия" type="text" isPopup={true} setIsChange={this.setIsChange} />
                   <Input values={values.email} errors={errors.email} touched={touched.email} handleChange={handleChange} name="email" placeholder="E-mail" type="email" isPopup={true} setIsChange={this.setIsChange} />
                   <Input values={values.avatar} errors={errors.avatar} touched={touched.avatar} handleChange={handleChange} name="avatar" placeholder="Ссылка на аватар" type="url" setIsChange={this.setIsChange} />
-                  <button className="popup__button" type="submit" disabled={!!errors.name || !!errors.surname || !!errors.email || this.state.isChangeEdit}>Обновить</button>
+                  <button className="popup__button" type="submit" disabled={!!errors.name || !!errors.surname || !!errors.email}>Обновить</button>
                 </Form>
               )
             }
