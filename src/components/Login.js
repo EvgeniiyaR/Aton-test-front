@@ -5,7 +5,7 @@ class Login extends Component {
   render() {
     return (
       <section className="form">
-        <AuthForm heading="Вход" buttonText="Войти" name="login" handleSubmit={this.props.handleLogin} />
+        <AuthForm heading="Вход" buttonText="Войти" name="login" handleSubmit={this.props.handleLogin} isError={this.props.isError} setIsError={this.props.setIsError} />
       </section>
     )
   }

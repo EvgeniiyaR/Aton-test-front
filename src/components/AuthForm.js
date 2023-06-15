@@ -9,15 +9,16 @@ class AuthForm extends Component {
 
     this.signupSchema = Yup.object().shape({
       email: Yup.string()
-      .email('Введите email')
+      .email('Некорректный email')
       .required('Введите email. Это обязательное поле для заполнения'),
       password: Yup.string()
       .required('Введите пароль. Это обязательное поле для заполнения'),
-    })
+    });
   }
 
   handleSubmit = (values) => {
     const { email, password } = values;
+    this.props.setIsError(false);
     this.props.handleSubmit(email, password);
   }
 
@@ -32,11 +33,11 @@ class AuthForm extends Component {
         validationSchema={this.signupSchema}
         onSubmit={this.handleSubmit}>
           {
-            ({ values, errors, touched, handleChange, isSubmitting }) => (
+            ({ values, errors, touched, handleChange }) => (
               <Form className="form__form" name={this.props.name} noValidate>
-                <Input values={values.email} errors={errors.email} touched={touched.email} handleChange={handleChange} isSubmitting={isSubmitting} name="email" placeholder="E-mail" type="email" />
-                <Input values={values.password} errors={errors.password} touched={touched.password} handleChange={handleChange} isSubmitting={isSubmitting} name="password" placeholder="Пароль" type="password" />
-                <button className="form__button" type="submit" disabled={isSubmitting}>{this.props.buttonText}</button>
+                <Input values={values.email} errors={errors.email} touched={touched.email} handleChange={handleChange} isError={this.props.isError} name="email" placeholder="E-mail" type="email" />
+                <Input values={values.password} errors={errors.password} touched={touched.password} handleChange={handleChange} isError={this.props.isError} name="password" placeholder="Пароль" type="password" />
+                <button className="form__button" type="submit">{this.props.buttonText}</button>
               </Form>
             )
           }

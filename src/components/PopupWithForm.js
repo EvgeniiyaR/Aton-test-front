@@ -1,6 +1,7 @@
 import { Component } from 'react';
 
 class PopupWithForm extends Component {
+
   render() {
     return (
       <div className={`popup ${this.props.isOpen && "popup_opened"}`}>

@@ -2,7 +2,6 @@ import { Component } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { Modal } from 'antd';
 
-
 class Header extends Component {
   handleLogoutConfirm = () => {
     Modal.confirm({

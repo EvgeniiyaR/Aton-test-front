@@ -44,8 +44,8 @@ class App extends Component {
         id: '',
         first_name: '',
         last_name: '',
-        email_name: '',
-        avatar_name: '',
+        email: '',
+        avatar: '',
       },
       indexUser: null,
       newId: null,
@@ -267,8 +267,8 @@ class App extends Component {
         id: '',
         first_name: '',
         last_name: '',
-        email_name: '',
-        avatar_name: '',
+        email: '',
+        avatar: '',
       },
     });
   }
@@ -350,8 +350,8 @@ class App extends Component {
           id: null,
           first_name: '',
           last_name: '',
-          email_name: '',
-          avatar_name: '',
+          email: '',
+          avatar: '',
         },
         infoList: list,
         isError: false,
@@ -442,7 +442,7 @@ class App extends Component {
                 <Loader />
               } isLoggedIn={this.state.isLoggedIn} />} />
             <Route path="/register" element={this.state.isLoggedIn ? <Navigate to="/" replace /> : this.state.isRegister ? <Navigate to="/login" replace /> : <Register handleRegister={this.handleRegister} />} />
-            <Route path="/login" element={this.state.isLoggedIn ? <Navigate to="/" replace /> : <Login handleLogin={this.handleLogin} />} />
+            <Route path="/login" element={this.state.isLoggedIn ? <Navigate to="/" replace /> : <Login isError={this.state.isError} setIsError={this.setIsError} handleLogin={this.handleLogin} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
