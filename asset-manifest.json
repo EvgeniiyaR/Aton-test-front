@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/Aton-test-front/static/css/main.250ca25d.css",
-    "main.js": "/Aton-test-front/static/js/main.e24b5d7f.js",
-    "static/js/787.83963e7c.chunk.js": "/Aton-test-front/static/js/787.83963e7c.chunk.js",
+    "main.css": "/Aton-test-front/static/css/main.39be1ba1.css",
+    "main.js": "/Aton-test-front/static/js/main.675c6e5a.js",
+    "static/js/787.0e3c05e5.chunk.js": "/Aton-test-front/static/js/787.0e3c05e5.chunk.js",
     "index.html": "/Aton-test-front/index.html",
     "static/media/pencil-light.svg": "/Aton-test-front/static/media/pencil-light.8667ac4a523e8fc42e59.svg",
     "static/media/delete-light.svg": "/Aton-test-front/static/media/delete-light.2ceb783afbab75916ddc.svg",
-    "main.250ca25d.css.map": "/Aton-test-front/static/css/main.250ca25d.css.map",
-    "main.e24b5d7f.js.map": "/Aton-test-front/static/js/main.e24b5d7f.js.map",
-    "787.83963e7c.chunk.js.map": "/Aton-test-front/static/js/787.83963e7c.chunk.js.map"
+    "main.39be1ba1.css.map": "/Aton-test-front/static/css/main.39be1ba1.css.map",
+    "main.675c6e5a.js.map": "/Aton-test-front/static/js/main.675c6e5a.js.map",
+    "787.0e3c05e5.chunk.js.map": "/Aton-test-front/static/js/787.0e3c05e5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.250ca25d.css",
-    "static/js/main.e24b5d7f.js"
+    "static/css/main.39be1ba1.css",
+    "static/js/main.675c6e5a.js"
   ]
 }
