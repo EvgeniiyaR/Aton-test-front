@@ -158,7 +158,7 @@ class Main extends Component {
         <button className="table__button" onClick={this.props.onAddUser} type="button">Добавить пользователя</button>
         <div className="table__page-container">
           <ul className="table__page-list">
-            <li><button className="table__button-page" onClick={this.handleSelectedPrevPageClick} disabled={this.state.isDisabledPrevButton}>❮</button></li>
+            <li><button className="table__button-page" title="Предыдущая страница" onClick={this.handleSelectedPrevPageClick} disabled={this.state.isDisabledPrevButton}>❮</button></li>
           {[...Array(this.props.pages).keys()].map((i) => (
             <li key={i + 1} >
               <Page
@@ -173,7 +173,7 @@ class Main extends Component {
                 setIsLoading={this.props.setIsLoading} />
             </li>
           ))}
-            <li><button className="table__button-page" onClick={this.handleSelectedNextPageClick} disabled={this.state.isDisabledNextButton}>❯</button></li>
+            <li><button className="table__button-page" title="Следующая страница" onClick={this.handleSelectedNextPageClick} disabled={this.state.isDisabledNextButton}>❯</button></li>
           </ul>
           <label className="table__page-label">Элементов на странице
             <select onChange={this.handleChange} name="per-page">

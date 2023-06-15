@@ -1,11 +1,49 @@
 import { Component } from 'react';
-import AuthForm from './AuthForm';
+import Input from './Input';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+
+    this.loginSchema = Yup.object().shape({
+      email: Yup.string()
+      .email('Некорректный email')
+      .required('Введите email'),
+      password: Yup.string()
+      .min(8, 'Пароль должен быть не менее 8 символов')
+      .matches(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}/g, 'Пароль должен содержать хотя бы одно число, заглавную и прописную латинские буквы')
+      .required('Введите пароль'),
+    });
+  }
+
+  handleSubmit = (values) => {
+    const { email, password } = values;
+    this.props.handleLogin(email, password);
+  }
+
   render() {
     return (
       <section className="form">
-        <AuthForm heading="Вход" buttonText="Войти" name="login" handleSubmit={this.props.handleLogin} isError={this.props.isError} setIsError={this.props.setIsError} />
+        <h1 className="form__heading">Вход</h1>
+        <Formik initialValues={{
+          email: '',
+          password: '',
+        }}
+        validationSchema={this.loginSchema}
+        onSubmit={this.handleSubmit}>
+          {
+            ({ values, errors, touched, handleChange }) => (
+              <Form className="form__form" name="login" noValidate>
+                <Input values={values.email} errors={errors.email} touched={touched.email} handleChange={handleChange} isError={this.props.isError} name="email" placeholder="E-mail" type="email" isPopup={false} />
+                <Input values={values.password} errors={errors.password} touched={touched.password} handleChange={handleChange} isError={this.props.isError} name="password" placeholder="Пароль" type="password" isPopup={false} />
+                <button className="form__button" type="submit">Войти</button>
+              </Form>
+            )
+          }
+        </Formik>
+        {this.props.children}
       </section>
     )
   }

@@ -6,6 +6,9 @@ import * as Yup from 'yup';
 class EditUserPopup extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isChangeEdit: true,
+    }
 
     this.editSchema = Yup.object().shape({
       name: Yup.string()
@@ -22,6 +25,10 @@ class EditUserPopup extends Component {
       avatar: Yup.string()
       .url('Некорректный url')
     });
+  }
+
+  setIsChange = (isChangeEdit) => {
+    this.setState({ isChangeEdit });
   }
 
   //Редактирование данных, сброс стандратного поведения формы, закрытие попапа редактирования и перезапись данных
@@ -41,7 +48,7 @@ class EditUserPopup extends Component {
         <div className="popup__container">
           <button className="popup__exit-button" type="button" onClick={this.props.onClose}></button>
           <h2 className="popup__label">Редактировать пользователя</h2>
-          <Formik enableReinitialize initialValues={{
+          <Formik enableReinitialize validateOnChange initialValues={{
               name: this.props.selectedUser.first_name,
               surname: this.props.selectedUser.last_name,
               email: this.props.selectedUser.email,
@@ -52,11 +59,11 @@ class EditUserPopup extends Component {
             {
               ({ values, errors, touched, handleChange }) => (
                 <Form className="popup__form" name="edit" noValidate>
-                  <Input values={values.name} errors={errors.name} touched={touched.name} handleChange={handleChange} name="name" placeholder="Имя" type="text" />
-                  <Input values={values.surname} errors={errors.surname} touched={touched.surname} handleChange={handleChange} name="surname" placeholder="Фамилия" type="text" />
-                  <Input values={values.email} errors={errors.email} touched={touched.email} handleChange={handleChange} name="email" placeholder="E-mail" type="email" />
-                  <Input values={values.avatar} errors={errors.avatar} touched={touched.avatar} handleChange={handleChange} name="avatar" placeholder="Ссылка на аватар" type="url" />
-                  <button className="popup__button" type="submit">Обновить</button>
+                  <Input values={values.name} errors={errors.name} touched={touched.name} handleChange={handleChange} name="name" placeholder="Имя" type="text" isPopup={true} setIsChange={this.setIsChange} />
+                  <Input values={values.surname} errors={errors.surname} touched={touched.surname} handleChange={handleChange} name="surname" placeholder="Фамилия" type="text" isPopup={true} setIsChange={this.setIsChange} />
+                  <Input values={values.email} errors={errors.email} touched={touched.email} handleChange={handleChange} name="email" placeholder="E-mail" type="email" isPopup={true} setIsChange={this.setIsChange} />
+                  <Input values={values.avatar} errors={errors.avatar} touched={touched.avatar} handleChange={handleChange} name="avatar" placeholder="Ссылка на аватар" type="url" setIsChange={this.setIsChange} />
+                  <button className="popup__button" type="submit" disabled={!!errors.name || !!errors.surname || !!errors.email || this.state.isChangeEdit}>Обновить</button>
                 </Form>
               )
             }

@@ -1,75 +1,77 @@
 import { Component } from 'react';
-import PopupWithForm from './PopupWithForm';
+import Input from './Input';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
 class AddUserPopup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      avatar: '',
-    };
+      isChangeAdd: true,
+    }
+
+    this.addSchema = Yup.object().shape({
+      name: Yup.string()
+      .min(2, 'Слишком короткое имя')
+      .max(30, 'Слишком длинное имя')
+      .required('Введите имя'),
+      surname: Yup.string()
+      .min(2, 'Слишком короткая фамилия')
+      .max(30, 'Слишком длинная фамилия')
+      .required('Введите фамилию'),
+      email: Yup.string()
+      .email('Некорректный e-mail')
+      .required('Введите e-mail'),
+      avatar: Yup.string()
+      .url('Некорректный url')
+    });
   }
 
-  //Запись изменений в значениях инпутов
-
-  handleChange = (e) => {
-    if (e.target.name === 'name') {
-      this.setState({
-        firstName: e.target.value,
-      });
-    } else if (e.target.name === 'surname') {
-      this.setState({
-        lastName: e.target.value,
-      });
-    } else if (e.target.name === 'email') {
-      this.setState({
-        email: e.target.value,
-      });
-    } else if (e.target.name === 'avatar') {
-      this.setState({
-        avatar: e.target.value,
-      });
-    }
+  setIsChange = (isChangeAdd) => {
+    this.setState({ isChangeAdd });
   }
 
   //Редактирование данных, сброс стандратного поведения формы, закрытие попапа редактирования и перезапись данных
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = (values) => {
     this.props.onAddUser();
     this.props.users.unshift({
       id: Number(this.props.id),
-      first_name: this.state.firstName,
-      last_name: this.state.lastName,
-      email: this.state.email,
-      avatar: this.state.avatar,
-    });
-    this.setState({
-      firstName: '',
-      lastName: '',
-      email: '',
-      avatar: '',
+      first_name: values.name,
+      last_name: values.surname,
+      email: values.email,
+      avatar: values.avatar || 'https://shkolasam.gosuslugi.ru/netcat_files/9/164/avatar_scaled_19.jpeg',
     });
   }
 
   render() {
     return (
-      <PopupWithForm isOpen={this.props.isOpen} onClose={this.props.onClose} onSubmit={this.handleSubmit} name="add" title="Добавить пользователя" buttonText="Сохранить">
-        <label className="popup__input-label">
-          <input className="popup__input" type="text" value={this.state.firstName || ''} onChange={this.handleChange} name="name" placeholder="Имя" required minLength="2" maxLength="40" />
-        </label>
-        <label className="popup__input-label">
-          <input className="popup__input" type="text" value={this.state.lastName || ''} onChange={this.handleChange} name="surname" placeholder="Фамилия" required minLength="2" maxLength="40" />
-        </label>
-        <label className="popup__input-label">
-          <input className="popup__input" type="email" value={this.state.email || ''} onChange={this.handleChange} name="email" placeholder="E-mail" required minLength="2" maxLength="40" />
-        </label>
-        <label className="popup__input-label">
-          <input className="popup__input" type="url" value={this.state.avatar || ''} onChange={this.handleChange} name="avatar" placeholder="Ссылка на аватар" required />
-        </label>
-      </PopupWithForm>
+      <div className={`popup ${this.props.isOpen && "popup_opened"}`}>
+        <div className="popup__container">
+          <button className="popup__exit-button" type="button" onClick={this.props.onClose}></button>
+          <h2 className="popup__label">Добавить пользователя</h2>
+      <Formik enableReinitialize validateOnChange validateOnBlur initialValues={{
+        name: '',
+        surname: '',
+        email: '',
+        avatar: '',
+      }}
+      validationSchema={this.addSchema}
+      onSubmit={this.handleSubmit}>
+      {
+        ({ values, errors, touched, handleChange }) => (
+          <Form className="popup__form" name="add" noValidate>
+            <Input values={values.name} errors={errors.name} touched={touched.name} handleChange={handleChange} name="name" placeholder="Имя" type="text" isPopup={true} setIsChange={this.setIsChange} />
+            <Input values={values.surname} errors={errors.surname} touched={touched.surname} handleChange={handleChange} name="surname" placeholder="Фамилия" type="text" isPopup={true} setIsChange={this.setIsChange} />
+            <Input values={values.email} errors={errors.email} touched={touched.email} handleChange={handleChange} name="email" placeholder="E-mail" type="email" isPopup={true} setIsChange={this.setIsChange} />
+            <Input values={values.avatar} errors={errors.avatar} touched={touched.avatar} handleChange={handleChange} name="avatar" placeholder="Ссылка на аватар" type="url" setIsChange={this.setIsChange} />
+            <button className="popup__button" type="submit" disabled={!!errors.name || !!errors.surname || !!errors.email || this.state.isChangeAdd}>Сохранить</button>
+          </Form>
+        )
+      }
+    </Formik>
+      </div>
+    </div>
     )
   }
 }

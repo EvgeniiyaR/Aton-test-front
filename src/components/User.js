@@ -75,9 +75,9 @@ class User extends Component {
         <td className="table__cell">{this.props.user.first_name}</td>
         <td className="table__cell">{this.props.user.last_name}</td>
         <td className="table__cell table__cell_type_email">{this.props.user.email}</td>
-        <td className="table__cell table__cell_type_btn-email"><button className="table__btn" type="button" onClick={this.handleEmailButtonClick} value={this.props.user.email}>@</button></td>
-        <td className="table__cell table__cell_type_edit"><button className="table__btn table__btn_type_edit" onClick={this.handleEditSelectedUserClick} type="button"></button></td>
-        <td className="table__cell table__cell_type_delete"><button className="table__btn table__btn_type_delete" onClick={this.handleDeleteConfirm} type="button"></button></td>
+        <td className="table__cell table__cell_type_btn-email" title="Скопировать e-mail"><button className="table__btn" type="button" onClick={this.handleEmailButtonClick} value={this.props.user.email}>@</button></td>
+        <td className="table__cell table__cell_type_edit" title="Редактировать пользователя"><button className="table__btn table__btn_type_edit" onClick={this.handleEditSelectedUserClick} type="button"></button></td>
+        <td className="table__cell table__cell_type_delete" title="Удалить пользователя"><button className="table__btn table__btn_type_delete" onClick={this.handleDeleteConfirm} type="button"></button></td>
       </>
     )
   }

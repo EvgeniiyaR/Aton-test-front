@@ -7,7 +7,6 @@ import Header from './Header';
 import Footer from './Footer';
 import EditUserPopup from './EditUserPopup';
 import AddUserPopup from './AddUserPopup';
-// import InfoTooltip from './InfoTooltip';
 import Register from './Register';
 import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
@@ -442,7 +441,7 @@ class App extends Component {
                 <Loader />
               } isLoggedIn={this.state.isLoggedIn} />} />
             <Route path="/register" element={this.state.isLoggedIn ? <Navigate to="/" replace /> : this.state.isRegister ? <Navigate to="/login" replace /> : <Register handleRegister={this.handleRegister} />} />
-            <Route path="/login" element={this.state.isLoggedIn ? <Navigate to="/" replace /> : <Login isError={this.state.isError} setIsError={this.setIsError} handleLogin={this.handleLogin} />} />
+            <Route path="/login" element={this.state.isLoggedIn ? <Navigate to="/" replace /> : <Login handleLogin={this.handleLogin} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
@@ -462,10 +461,6 @@ class App extends Component {
           onClose={this.closeAllPopups}
           users={this.state.users}
           id={this.state.newId} />
-        {/* <InfoTooltip
-          infoList={this.state.infoList}
-          setInfoList={this.setInfoList}
-          isError={this.state.isError} /> */}
       </div>
     );
   }

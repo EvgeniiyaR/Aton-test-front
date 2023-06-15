@@ -60,7 +60,6 @@
   text-align: center;
 }
 
-
 .table__cell_type_btn-email {
   display: none;
 }
@@ -270,6 +269,12 @@
   gap: 5px;
 }
 
+.popup__input-label_required:before {
+  content: "* Обязательное поле";
+  color: red;
+  font-size: 12px;
+}
+
 .popup__input {
   box-sizing: border-box;
   padding: 0;
@@ -300,6 +305,11 @@
 .popup__button:hover {
   background-color:rgba(0, 0, 0, .8);
   cursor: pointer;
+}
+
+.popup__button:disabled {
+  pointer-events: none;
+  opacity: .5;
 }
 
 .info__button {
