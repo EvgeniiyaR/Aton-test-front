@@ -34,6 +34,9 @@ class AddUserPopup extends Component {
   //Редактирование данных, сброс стандратного поведения формы, закрытие попапа редактирования и перезапись данных
 
   handleSubmit = (values) => {
+    this.setState({
+      isChangeAdd: true,
+    });
     this.props.onAddUser();
     this.props.users.unshift({
       id: Number(this.props.id),
@@ -68,7 +71,7 @@ class AddUserPopup extends Component {
             <Input values={values.surname} errors={errors.surname} touched={touched.surname} handleChange={handleChange} name="surname" placeholder="Фамилия" type="text" isPopup={true} setIsChange={this.setIsChange} />
             <Input values={values.email} errors={errors.email} touched={touched.email} handleChange={handleChange} name="email" placeholder="E-mail" type="email" isPopup={true} setIsChange={this.setIsChange} />
             <Input values={values.avatar} errors={errors.avatar} touched={touched.avatar} handleChange={handleChange} name="avatar" placeholder="Ссылка на аватар" type="url" setIsChange={this.setIsChange} />
-            <button className="popup__button" type="submit" disabled={!!errors.name || !!errors.surname || !!errors.email}>Сохранить</button>
+            <button className="popup__button" type="submit" disabled={this.state.isChangeAdd || !!errors.name || !!errors.surname || !!errors.email}>Сохранить</button>
           </Form>
         )
       }

@@ -69,7 +69,6 @@ class User extends Component {
     copy(copyEmail);
     this.props.setIsError(false);
     message.success({
-      maxCount: 1,
       content: `Email ${copyEmail} скопирован!`,
     });
   }
