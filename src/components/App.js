@@ -50,7 +50,6 @@ class App extends Component {
       newId: null,
       isLoadingGlobal: false,
       isLoading: false,
-      infoList: [],
       indexInfo: null,
       isLoggedIn: false,
       isRegister: false,
@@ -83,10 +82,8 @@ class App extends Component {
   //Регистрация по API
 
   handleRegister = (email, password) => {
-    const list = this.state.infoList;
     auth.register(email, password)
     .then(() => {
-      list.push('Регистрация прошла успешно!');
       notification.success({
         message: (
           <div style={{ color: "rgb(255, 255 ,255)" }}>
@@ -103,7 +100,6 @@ class App extends Component {
       this.setState({
         isError: true,
       });
-      list.push('Возникла ошибка!');
       notification.error({
         message: (
           <div style={{ color: "rgb(255, 255 ,255)" }}>
@@ -123,7 +119,6 @@ class App extends Component {
   //Аутентификация по API
 
   handleLogin = (email, password) => {
-    const list = this.state.infoList;
     auth.login(email, password)
     .then((res) => {
       localStorage.setItem('token', res.token);
@@ -132,7 +127,6 @@ class App extends Component {
         isLoggedIn: true,
         isError: false,
       });
-      list.push('Добро пожаловать!');
       message.info({
         content: 'Добро пожаловать!',
       });
@@ -141,7 +135,6 @@ class App extends Component {
       this.setState({
         isError: true,
       });
-      list.push('Возникла ошибка!');
       notification.error({
         message: (
           <div style={{ color: "rgb(255, 255 ,255)" }}>
@@ -161,7 +154,6 @@ class App extends Component {
   //Выход по API
 
   handleLogout = () => {
-    const list = this.state.infoList;
     auth.logout()
     .then(() => {
       localStorage.removeItem('token');
@@ -170,7 +162,6 @@ class App extends Component {
         isRegister: false,
         isError: false,
       });
-      list.push('До встречи!');
       message.info({
         content: 'До встречи!',
       });
@@ -179,7 +170,6 @@ class App extends Component {
       this.setState({
         isError: true,
       });
-      list.push('Возникла ошибка!');
       notification.error({
         message: (
           <div style={{ color: "rgb(255, 255 ,255)" }}>
@@ -234,12 +224,6 @@ class App extends Component {
 
   setIsLoading = (isLoading) => {
     this.setState({ isLoading });
-  }
-
-  //Установка стейта списка оповещений
-
-  setInfoList = (infoList) => {
-    this.setState({ infoList });
   }
 
   //Установка стейта оповещения об ошибке
@@ -297,10 +281,8 @@ class App extends Component {
   //Запрос по API редактирования пользователя
 
   handleEditUser = () => {
-    const list = this.state.infoList;
     api.editUserInfo(this.state.selectedUser.id)
     .then(() => {
-      list.push('Данные пользователя обновлены!');
       notification.success({
         message: (
           <div style={{ color: "rgb(255, 255 ,255)" }}>
@@ -310,7 +292,6 @@ class App extends Component {
       });
       this.setState({
         isEditUserPopupOpen: false,
-        infoList: list,
         isError: false,
       });
     })
@@ -318,7 +299,6 @@ class App extends Component {
       this.setState({
         isError: true,
       });
-      list.push('Возникла ошибка!');
       notification.error({
         message: (
           <div style={{ color: "rgb(255, 255 ,255)" }}>
@@ -333,10 +313,8 @@ class App extends Component {
   //Запрос по API удаления пользователя
 
   handleDeleteUser = () => {
-    const list = this.state.infoList;
     api.deleteUserInfo(this.state.selectedUser.id)
     .then(() => {
-      list.push('Пользователь удален!');
       notification.success({
         message: (
           <div style={{ color: "rgb(255, 255 ,255)" }}>
@@ -352,7 +330,6 @@ class App extends Component {
           email: '',
           avatar: '',
         },
-        infoList: list,
         isError: false,
       });
     })
@@ -360,7 +337,6 @@ class App extends Component {
       this.setState({
         isError: true,
       });
-      list.push('Возникла ошибка!');
       notification.error({
         message: (
           <div style={{ color: "rgb(255, 255 ,255)" }}>
@@ -375,10 +351,8 @@ class App extends Component {
   //Запрос по API добавления пользователя
 
   handleAddUser = () => {
-    const list = this.state.infoList;
     api.addNewUser()
     .then((res) => {
-      list.push(`Пользователь добавлен! ID ${res.id}`);
       notification.success({
         message: (
           <div style={{ color: "rgb(255, 255 ,255)" }}>
@@ -389,7 +363,6 @@ class App extends Component {
       this.setState({
         isAddUserPopupOpen: false,
         newId: res.id,
-        infoList: list,
         isError: false,
       });
     })
@@ -397,7 +370,6 @@ class App extends Component {
       this.setState({
         isError: true,
       });
-      list.push('Возникла ошибка!');
       notification.error({
         message: (
           <div style={{ color: "rgb(255, 255 ,255)" }}>
@@ -434,8 +406,6 @@ class App extends Component {
                   onPage={this.handleGetUsers}
                   isLoading={this.state.isLoading}
                   setIsLoading={this.setIsLoading}
-                  infoList={this.state.infoList}
-                  setInfoList={this.setInfoList}
                   setIsError={this.setIsError} />
                 :
                 <Loader />

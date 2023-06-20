@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { copy } from 'clipboard';
 import { Modal } from 'antd';
-
+import { message } from 'antd';
 
 class User extends Component {
   constructor(props) {
@@ -57,15 +57,15 @@ class User extends Component {
   //Нажатие на кнопку email, которая появляется при max-width: 480px, копирует email и уведомляет пользователя
 
   handleEmailButtonClick = (e) => {
-    const list = this.props.infoList;
     const copyEmail = e.target.value;
     this.setState({
       isEmailClick: !this.state.isEmailClick,
     });
     copy(copyEmail);
     this.props.setIsError(false);
-    list.push(`Email ${copyEmail} скопирован!`);
-    this.props.setInfoList(list);
+    message.success({
+      content: `Email ${copyEmail} скопирован!`,
+    });
   }
 
   render() {
@@ -74,10 +74,10 @@ class User extends Component {
         <td className="table__cell"><img className="table__photo" src={this.props.user.avatar} alt={`${this.props.user.first_name} ${this.props.user.last_name}`} /></td>
         <td className="table__cell">{this.props.user.first_name}</td>
         <td className="table__cell">{this.props.user.last_name}</td>
-        <td className="table__cell table__cell_type_email">{this.props.user.email}</td>
-        <td className="table__cell table__cell_type_btn-email" title="Скопировать e-mail"><button className="table__btn" type="button" onClick={this.handleEmailButtonClick} value={this.props.user.email}>@</button></td>
-        <td className="table__cell table__cell_type_edit" title="Редактировать пользователя"><button className="table__btn table__btn_type_edit" onClick={this.handleEditSelectedUserClick} type="button"></button></td>
-        <td className="table__cell table__cell_type_delete" title="Удалить пользователя"><button className="table__btn table__btn_type_delete" onClick={this.handleDeleteConfirm} type="button"></button></td>
+        <td className="table__cell table__cell_type_email"><button className="table__copy" title="Скопировать e-mail" type="button" onClick={this.handleEmailButtonClick} value={this.props.user.email}>{this.props.user.email}</button></td>
+        <td className="table__cell table__cell_type_btn-email"><button className="table__btn" title="Скопировать e-mail" type="button" onClick={this.handleEmailButtonClick} value={this.props.user.email}>@</button></td>
+        <td className="table__cell table__cell_type_edit"><button className="table__btn table__btn_type_edit" title="Редактировать пользователя" onClick={this.handleEditSelectedUserClick} type="button"></button></td>
+        <td className="table__cell table__cell_type_delete"><button className="table__btn table__btn_type_delete" title="Удалить пользователя" onClick={this.handleDeleteConfirm} type="button"></button></td>
       </>
     )
   }
