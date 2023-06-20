@@ -16,6 +16,8 @@ import { notification, message } from 'antd';
 
 class App extends Component {
   constructor(props) {
+    super(props);
+
     notification.config({
       maxCount: 5,
       placement: "bottomLeft",
@@ -32,7 +34,10 @@ class App extends Component {
       style: { backgroundColor: "black" },
     });
 
-    super(props);
+    message.config({
+      duration: 2,
+      maxCount: 1,
+    });
 
     this.state = {
       users: [],

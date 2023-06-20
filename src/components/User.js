@@ -9,6 +9,11 @@ class User extends Component {
     this.state = {
       isEmailClick: false,
     };
+
+    message.config({
+      duration: 2,
+      maxCount: 1,
+    });
   }
 
   //Нажатие на кнопку редактирования, в стейт selectedUser передается информация о выбранном пользователе, открывается соответствующий попап, запоминается индекс пользователя в общем списке
@@ -64,6 +69,7 @@ class User extends Component {
     copy(copyEmail);
     this.props.setIsError(false);
     message.success({
+      maxCount: 1,
       content: `Email ${copyEmail} скопирован!`,
     });
   }
