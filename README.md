@@ -28,10 +28,10 @@
 * React;
 * Методология БЭМ;
 * Webpack;
-* ESLint: eslint-config-react-app.
-* UI Ant Design
-* yup valitation
-* formik
+* ESLint: eslint-config-react-app;
+* UI Ant Design;
+* yup validation;
+* formik.
 
 Инструкция по развертыванию:
 1. Склонируйте репозиторий локально: git clone https://github.com/EvgeniiyaR/Aton-test-front.git
@@ -44,4 +44,5 @@
 ---
 
 Ссылка на деплой проекта: https://evgeniiyar.github.io/Aton-test-front/
+
 P.S. из-за особенностей роутов gh-pages работает некорректно. Если перейти по ссылке на деплой, то Вы попадете на неизвестную страницу, далее можно пользоваться внутренней навигацией на сайте.
